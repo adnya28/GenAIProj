@@ -1,72 +1,116 @@
-Problem Statement: 
-People frequently need to understand large amounts of text such as:
+# 🎯 Problem Statement
 
-Business reports
-Meeting transcripts
-Research papers
-News articles
-Project documents
-Customer complaints
-Technical documentation
-Emails
-Legal/business documents
+Organizations and individuals deal with large amounts of unstructured information every day.
 
-Reading a 20–50 page document just to understand the important information is time-consuming.
+Examples include:
 
-Solution: 
-Build an AI-powered application that accepts a large text document and automatically generates:
+- Business reports
+- Annual reports
+- Research papers
+- Meeting transcripts
+- Technical documents
+- HR policies
+- Customer complaints
+- Project documents
+- Product documentation
+- Legal/business documents
+- Emails
 
-Short Summary
-Detailed Summary
-Key Points
-Important Entities
-Action Items
+Manually reading these documents to identify important information is time-consuming.
 
-The application should transform unstructured text into a structured, easy-to-understand format.
+### Objective
 
-High-Level Architecture:
-                User
-                  |
-                  ↓
-           Upload / Paste Text
-                  |
-                  ↓
-             Text Processor
-                  |
-                  ↓
-          Check Text Length
-                  |
-          ┌───────┴────────┐
-          ↓                ↓
-      Small Text        Large Text
-          |                |
-          |          Chunk Document
-          |                |
-          |          Summarize Chunks
-          |                |
-          |          Combine Summaries
-          |                |
-          └───────┬────────┘
-                  ↓
-                 LLM
-                  ↓
-          Structured Output
-                  ↓
-       ┌──────────┼──────────┐
-       ↓          ↓          ↓
-    Summary    Key Points  Entities
-                  |
-                  ↓
-             Action Items
-                  |
-                  ↓
-             Final Response
+Build an AI-powered application that accepts text or documents and automatically generates:
 
+1. Short Summary
+2. Detailed Summary
+3. Key Points
+4. Important Entities
+5. Action Items
 
-Technology Stack:
+The application should be capable of processing both small and large documents while minimizing hallucinations and preserving important information.
 
-Python
-FastAPI
-LangChain
-Google Gemini
-Pydantic
+# 🏗️ High-Level Architecture
+
+The project evolves through multiple stages.
+
+### Initial Architecture
+
+```text
+                  User
+                    |
+                    v
+             Upload / Paste Text
+                    |
+                    v
+              Text Processor
+                    |
+                    v
+              Document Loader
+                    |
+                    v
+               Text Chunking
+                    |
+                    v
+                   LLM
+                    |
+                    v
+           Structured Output
+                    |
+       +------------+-------------+
+       |            |             |
+       v            v             v
+   Summary      Key Points     Entities
+                                  |
+                                  v
+                            Action Items
+```
+
+---
+# 🧩 Advanced Architecture
+
+The final version introduces RAG, agents, LangGraph, APIs and MCP.
+
+```text
+                           User
+                             |
+                             v
+                       FastAPI Backend
+                             |
+                             v
+                       LangGraph Agent
+                             |
+              +--------------+--------------+
+              |              |              |
+              v              v              v
+             RAG          Tools/APIs       MCP
+              |              |              |
+              v              v              v
+        Vector Database   External       MCP Servers
+              |           Systems           |
+              |              |              |
+              +--------------+--------------+
+                             |
+                             v
+                            LLM
+                             |
+                             v
+                    Structured Response
+                             |
+             +---------------+----------------+
+             |               |                |
+             v               v                v
+         Summary         Key Points      Action Items
+```
+
+---
+
+# 🛠️ Technology Stack
+
+## Backend
+
+- Python
+- FastAPI
+- LangChain
+- LangGraph
+- Pydantic
